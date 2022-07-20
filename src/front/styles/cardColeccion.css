@@ -56,3 +56,13 @@
 .row-privada > * {
   width: auto;
 }
+
+.fa-pen {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.boton-editar {
+  border: none;
+  background-color: transparent;
+}

@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/elementos.css";
 import "../../styles/cardColeccion.css";
-import Hoja from "../../img/hoja.png";
 import { Link } from "react-router-dom";
 import { CalendarModal } from "./CalendarModal.js";
+import { ModalEditarAlias } from "../component/modalEditarAlias";
 import swal from "sweetalert";
 
 export const CardColeccion = (props) => {
@@ -26,6 +25,15 @@ export const CardColeccion = (props) => {
             <h2 className="texto-card-privada ">{props.name} </h2>
             <h3 className="texto-card-privada ">
               "{props.alias !== "" ? props.alias : "Sin alias"}"
+              <Link
+                onClick={() =>
+                  actions.setModal(true, props.name, props.plant_id)
+                }
+              >
+                <button class="boton-editar" type="button">
+                  <i class="fas fa-pen"></i>
+                </button>
+              </Link>
             </h3>
             <p className="texto-card-privada " id="card-coleccion1">
               Faltan{" "}
@@ -74,6 +82,10 @@ export const CardColeccion = (props) => {
           </div>
         </Link>
       </div>
+      <ModalEditarAlias
+        estado={store.modal.estado}
+        callback={props.callback}
+      ></ModalEditarAlias>
     </div>
   );
 };

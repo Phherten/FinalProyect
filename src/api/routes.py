@@ -188,3 +188,23 @@ def sendNotification():
     return response.json()
 
     sendNotification('Mensaje mandado correctamente', '✅')
+
+@api.route('/plant/edit', methods=['POST'])
+@jwt_required()
+def update_plant_alias():
+    request_body = request.get_json()
+    user_email = get_jwt_identity()
+
+    user = User.get_by_email(user_email)
+
+    user_plants = user.plant
+    plant_id = request_body["plant_id"]
+
+    for user_plant in user_plants:
+        if user_plant.id == plant_id:
+            user_plant.alias = request_body["alias"]
+            user_plant.save()
+            break
+    
+    return "ok"
+    

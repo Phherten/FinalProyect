@@ -59,7 +59,7 @@ class Plant(db.Model):
 
     @staticmethod
     def get_by_user(user_id):
-        return Plant.query.filter_by(user_id=user_id).all()
+        return Plant.query.filter_by(user_id=user_id).order_by("id").all()
 
     def serialize(self):
         return {

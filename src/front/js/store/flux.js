@@ -39,7 +39,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({
           modal: { estado: estado, nombre: nombre, id: id },
         });
-        console.log(store.modal);
       },
 
       resetBusqueda: () => {
@@ -295,8 +294,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         fetch(process.env.BACKEND_URL + "/api/user_plants", requestOptions)
           .then((response) => response.json())
           .then((result) => {
+            console.log(result);
             setStore({ user_plants: result });
           })
+          .catch((error) => console.log("error", error));
+      },
+
+      updatePlantAlias: (alias, plant_id) => {
+        var myHeaders = new Headers();
+        myHeaders.append(
+          "Authorization",
+          `Bearer ${sessionStorage.getItem("token")}`
+        );
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          plant_id: plant_id,
+          alias: alias,
+        });
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(process.env.BACKEND_URL + "/api/plant/edit/", requestOptions)
+          .then((response) => response.json())
+          .then((result) => console.log(result))
           .catch((error) => console.log("error", error));
       },
     },
